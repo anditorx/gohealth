@@ -1,11 +1,12 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {Splash} from './pages';
+import {Splash, GetStarted} from './pages';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <Splash />
+      {/* <Splash /> */}
+      <GetStarted />
     </SafeAreaView>
   );
 };
