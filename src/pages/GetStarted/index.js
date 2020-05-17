@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '600',
     color: 'white',
-    marginTop: 91,
+    marginTop: 150,
     // fontFamily: 'Nunito-SemiBold',
   },
 });
