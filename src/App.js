@@ -1,13 +1,15 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {Splash, GetStarted} from './pages';
+import Router from './router';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      {/* <Splash /> */}
-      <GetStarted />
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={styles.safeAreaView}>
+        <Router />
+      </SafeAreaView>
+    </NavigationContainer>
   );
 };
 
