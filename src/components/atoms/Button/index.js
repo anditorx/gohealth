@@ -1,11 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Button = ({type, title}) => {
+const Button = ({type, title, onPress}) => {
   return (
-    <View style={styles.container(type)}>
-      <Text style={styles.text(type)}>{title}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container(type)}>
+        <Text style={styles.text(type)}>{title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
