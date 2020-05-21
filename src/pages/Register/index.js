@@ -3,12 +3,12 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, Input} from '../../components';
 import {colors} from '../../utils/colors';
 
-const Register = () => {
+const Register = ({navigation}) => {
   return (
     <View style={styles.page}>
-      <Header />
+      <Header onPress={() => navigation.goBack()} title="Sign Up" />
       <View style={styles.content}>
-        {/* <Text>Register</Text> */}
+        <Gap height={24} />
         <Input label="Full Name" />
         <Gap height={24} />
         <Input label="Pekerjaan" />

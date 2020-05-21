@@ -10,6 +10,7 @@ export const colors = {
   secondary: mainColors.dark1,
   white: 'white',
   black: 'black',
+  yellow: 'yellow',
   text: {
     primary: mainColors.dark1,
     secondary: mainColors.grey1,
