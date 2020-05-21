@@ -18,7 +18,11 @@ const GetStarted = ({navigation}) => {
           onPress={() => navigation.navigate('Register')}
         />
         <Gap height={15} width={0} />
-        <Button title="Sign In" type="secondary" />
+        <Button
+          title="Sign In"
+          type="secondary"
+          onPress={() => navigation.navigate('Login')}
+        />
       </View>
     </ImageBackground>
   );
