@@ -11,16 +11,17 @@ import {
   Hospital,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {ButtomNavigator} from '../components';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainApp = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={(props) => <ButtomNavigator {...props} />}>
       <Tab.Screen name="Doctor" component={Doctor} />
       <Tab.Screen name="Messages" component={Messages} />
-      <Tab.Screen name="Hospital" component={Hospital} />
+      <Tab.Screen name="Hospitals" component={Hospital} />
     </Tab.Navigator>
   );
 };
