@@ -1,12 +1,23 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {HomeProfile, DoctorCategory, RatedDoctor, NewsItem} from '../../components';
+import {
+  HomeProfile,
+  DoctorCategory,
+  RatedDoctor,
+  NewsItem,
+  Gap,
+} from '../../components';
+import {colors} from '../../utils/colors';
 
 const Doctor = () => {
   return (
-    <View>
+    <View style={styles.page}>
       <HomeProfile />
-      <Text>Mau konsultasi dengan siapa hari ini?</Text>
+      <Gap height={30} />
+      <Text style={styles.welcomeTxt}>
+        Mau konsultasi dengan siapa hari ini?
+      </Text>
+      <Gap height={20} />
       <DoctorCategory />
       <DoctorCategory />
       <DoctorCategory />
@@ -25,4 +36,15 @@ const Doctor = () => {
 
 export default Doctor;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  page: {
+    paddingVertical: 30,
+    paddingHorizontal: 17,
+  },
+  welcomeTxt: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: colors.text.primary,
+    maxWidth: 210,
+  },
+});
