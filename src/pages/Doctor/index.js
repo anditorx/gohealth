@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
   category: {
     flexDirection: 'row',
+    marginLeft: 17,
   },
   wrapperScroll: {
     marginHorizontal: -17,
