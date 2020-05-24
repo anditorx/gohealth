@@ -7,6 +7,7 @@ import IconMessages from './ic-messages.svg';
 import IconMessagesActive from './ic-messages-active.svg';
 import IconHospital from './ic-hospitals.svg';
 import IconHospitalActive from './ic-hospitals-active.svg';
+import IconStarFullYellow from './ic-star-full-yellow.svg';
 
 export {
   IconBackDark,
@@ -18,4 +19,5 @@ export {
   IconMessagesActive,
   IconHospital,
   IconHospitalActive,
+  IconStarFullYellow,
 };
