@@ -59,11 +59,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
     color: colors.text.primary,
-    maxWidth: 210,
+    maxWidth: 250,
+    paddingHorizontal: 17,
   },
   category: {
     flexDirection: 'row',
-    marginLeft: 17,
+    marginLeft: 34,
+    marginRight: 25,
   },
   wrapperScroll: {
     marginHorizontal: -17,
@@ -71,8 +73,6 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: colors.white,
     flex: 1,
-    // paddingVertical: 30,
-    paddingHorizontal: 17,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginTop: 30,
-    marginBottom: 16,
+    marginBottom: 10,
+    paddingHorizontal: 17,
   },
 });

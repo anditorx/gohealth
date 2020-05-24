@@ -20,6 +20,7 @@ export default HomeProfile;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    paddingHorizontal: 17,
   },
   avatar: {
     width: 46,
