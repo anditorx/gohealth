@@ -5,6 +5,7 @@ import ILDokterAnak from './il-dokteranak.svg';
 import ILDokterUmum from './il-dokterumum.svg';
 import ILObat from './il-obat.svg';
 import ILPsikiater from './il-psikiater.svg';
+import ILCoverHospital from './il-cover-bg-hospital.png';
 
 export {
   ILLogo,
@@ -14,4 +15,5 @@ export {
   ILDokterUmum,
   ILObat,
   ILPsikiater,
+  ILCoverHospital,
 };
