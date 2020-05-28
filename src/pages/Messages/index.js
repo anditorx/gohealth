@@ -5,7 +5,7 @@ import {colors} from '../../utils/colors';
 import {DumDokter1, DumDokter2, DumDokter3} from '../../assets';
 
 const Messages = () => {
-  const [doctors, setDoctors] = useState([
+  const [doctors] = useState([
     {
       id: 1,
       picture: DumDokter1,
