@@ -1,15 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {colors} from '../../../utils/colors';
+import {IconNextDark} from '../../../assets';
 
-const ListDoctor = ({picture, name, chat}) => {
+const ListDoctor = ({picture, name, chat, type}) => {
   return (
     <View style={styles.container}>
       <Image source={picture} style={styles.avatar} />
-      <View>
+      <View style={styles.content}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.chat}>{chat}</Text>
       </View>
+      {type === 'next' && <IconNextDark />}
     </View>
   );
 };
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   avatar: {
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     borderRadius: 46 / 2,
     marginRight: 12,
   },
-
+  content: {flex: 1},
   name: {
     fontSize: 16,
     color: colors.text.primary,

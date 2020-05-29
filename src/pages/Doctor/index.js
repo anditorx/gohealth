@@ -10,7 +10,7 @@ import {
 import {colors} from '../../utils/colors';
 import {JSONCategoryDoctor} from '../../assets';
 
-const Doctor = () => {
+const Doctor = ({navigation}) => {
   return (
     <View style={styles.page}>
       <View style={styles.content}>
@@ -29,7 +29,11 @@ const Doctor = () => {
                 {JSONCategoryDoctor.data.map((item) => {
                   // console.log('item', item);
                   return (
-                    <DoctorCategory key={item.id} category={item.category} />
+                    <DoctorCategory
+                      key={item.id}
+                      category={item.category}
+                      onPress={() => navigation.navigate('ChooseDoctor')}
+                    />
                   );
                 })}
                 <Gap height={6} />
