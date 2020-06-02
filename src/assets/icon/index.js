@@ -12,6 +12,10 @@ import IconHospitalActive from './ic-hospitals-active.svg';
 import IconStarFullYellow from './ic-star-full-yellow.svg';
 import IconSendLight from './icon-send-light.svg';
 import IconSendDark from './icon-send-dark.svg';
+import IconStarGreen from './icon-star-green.svg';
+import IconProfileGreen from './ic-profile-green.svg';
+import IconNoteGreen from './ic-note-green.svg';
+import IconLanguages from './ic-languages.svg';
 
 export {
   IconBackDark,
@@ -28,4 +32,8 @@ export {
   IconStarFullYellow,
   IconSendLight,
   IconSendDark,
+  IconStarGreen,
+  IconProfileGreen,
+  IconNoteGreen,
+  IconLanguages,
 };

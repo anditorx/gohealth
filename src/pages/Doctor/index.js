@@ -16,7 +16,7 @@ const Doctor = ({navigation}) => {
       <View style={styles.content}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Gap height={30} />
-          <HomeProfile />
+          <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
           <Gap height={30} />
           <Text style={styles.welcomeTxt}>
             Mau konsultasi dengan siapa hari ini?
