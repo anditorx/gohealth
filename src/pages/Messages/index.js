@@ -4,7 +4,7 @@ import {List} from '../../components/molecules';
 import {colors} from '../../utils/colors';
 import {DumDokter1, DumDokter2, DumDokter3} from '../../assets';
 
-const Messages = () => {
+const Messages = ({navigation}) => {
   const [doctors] = useState([
     {
       id: 1,
@@ -36,6 +36,7 @@ const Messages = () => {
               picture={doctor.picture}
               name={doctor.name}
               desc={doctor.desc}
+              onPress={() => navigation.navigate('Chat')}
             />
           );
         })}

@@ -3,12 +3,12 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import {DumUser, IconRemovePhoto} from '../../../assets';
 import {colors} from '../../../utils/colors';
 
-const Profile = ({name, desc}) => {
+const Profile = ({name, desc, isRemove}) => {
   return (
     <View style={styles.container}>
       <View style={styles.borderProfile}>
         <Image source={DumUser} style={styles.avatar} />
-        <IconRemovePhoto style={styles.remove} />
+        {isRemove && <IconRemovePhoto style={styles.remove} />}
       </View>
       {name && (
         <View>

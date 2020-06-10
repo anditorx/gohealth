@@ -10,7 +10,7 @@ const UpdateProfile = ({navigation}) => {
       <Gap height={10} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Profile />
+          <Profile isRemove />
           <Gap height={30} />
           <Input label="Full Name" />
           <Gap height={20} />

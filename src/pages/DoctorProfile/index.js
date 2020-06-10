@@ -22,7 +22,10 @@ const DoctorProfile = ({navigation}) => {
           <ProfileItem label={'No. STR'} value={'2078140007'} />
         </View>
         <View style={styles.action}>
-          <Button title="Start Consultation" />
+          <Button
+            title="Start Consultation"
+            onPress={() => navigation.navigate('Chat')}
+          />
         </View>
       </View>
     </View>
