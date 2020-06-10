@@ -46,10 +46,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text.primary,
     marginTop: 16,
+    textAlign: 'center',
   },
   profession: {
     fontSize: 14,
     color: colors.text.secondary,
+    textAlign: 'center',
   },
   remove: {
     position: 'absolute',
