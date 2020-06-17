@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ILLogo} from '../../assets';
-import { colors } from '../../utils/colors';
+import {colors} from '../../utils/colors';
 
 const Splash = ({navigation}) => {
   useEffect(() => {

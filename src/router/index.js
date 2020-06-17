@@ -35,6 +35,11 @@ const Router = () => {
   return (
     <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
+        name="MainApp"
+        component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Splash"
         component={Splash}
         options={{headerShown: false}}
@@ -44,6 +49,7 @@ const Router = () => {
         component={GetStarted}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name="Register"
         component={Register}
@@ -59,11 +65,7 @@ const Router = () => {
         component={UploadPhoto}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="MainApp"
-        component={MainApp}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name="ChooseDoctor"
         component={ChooseDoctor}
