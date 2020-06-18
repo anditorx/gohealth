@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View, YellowBox} from 'react-native';
-YellowBox.ignoreWarnings(['Remote debugger']);
+// YellowBox.ignoreWarnings(['Remote debugger']);
 import {Button, Gap, Header, Input, Loading} from '../../components';
 import {Fire} from '../../config';
 import {colors, useForm} from '../../utils';
@@ -26,6 +26,14 @@ const Register = ({navigation}) => {
       .then((success) => {
         setLoading(false);
         setForm('reset');
+        const data = {
+          fullName: form.fullName,
+          profession: form.profession,
+          email: form.email,
+        };
+        Fire.database()
+          .ref('users/' + success.user.uid + '/')
+          .set(data);
         console.log('register success : ', success);
       })
       .catch((error) => {
