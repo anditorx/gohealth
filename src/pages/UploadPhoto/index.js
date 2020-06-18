@@ -1,25 +1,65 @@
-import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {Button, Gap, Header, Input, Link} from '../../components';
 import {colors} from '../../utils/colors';
-import {ILNullPhoto} from '../../assets';
-import {IconAddPhoto} from '../../assets';
+import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
+import ImagePicker from 'react-native-image-picker';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UploadPhoto = ({navigation}) => {
+  const [hasPhoto, setHasPhoto] = useState(false);
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const getImageFromGallery = () => {
+    ImagePicker.showImagePicker((response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('You are cancelled image');
+        showMessage({
+          message: 'You are cancelled to upload image',
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.grey2,
+          color: colors.grey1,
+        });
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+        showMessage({
+          message: response.error,
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      } else {
+        const source = {uri: response.uri};
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        setPhoto(source);
+        setHasPhoto(true);
+      }
+    });
+  };
+
   return (
     <View style={styles.page}>
       <Header onPress={() => navigation.goBack()} title="Upload Photo" />
       <View style={styles.content}>
         <View style={styles.profile}>
-          <View style={styles.avatarWrapper}>
-            <Image source={ILNullPhoto} style={styles.avatar} />
-            <IconAddPhoto style={styles.addPhoto} />
-          </View>
+          <TouchableOpacity
+            style={styles.avatarWrapper}
+            onPress={getImageFromGallery}>
+            <Image source={photo} style={styles.avatar} />
+            {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
+            {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
+          </TouchableOpacity>
           <Text style={styles.txtName}>Lady Rose</Text>
           <Text style={styles.txtProfesion}>Product Designer</Text>
         </View>
         <View>
           <Button
+            disable={!hasPhoto}
             title="Upload and Continue"
             onPress={() => navigation.replace('MainApp')}
           />
@@ -57,6 +97,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 110,
     height: 110,
+    borderRadius: 110 / 2,
   },
   avatarWrapper: {
     width: 130,

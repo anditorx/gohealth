@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {colors} from '../../../utils/colors';
+import {colors} from '../../../utils';
 import IconOnly from './IconOnly';
 import BtnIconSend from './BtnIconSend';
 
@@ -12,6 +12,14 @@ const Button = ({type, title, onPress, icon, disable}) => {
 
   if (type === 'icon-only') {
     return <IconOnly icon={icon} onPress={onPress} />;
+  }
+
+  if (disable) {
+    return (
+      <View style={styles.disableBg}>
+        <Text style={styles.disableText}>{title}</Text>
+      </View>
+    );
   }
   return (
     <TouchableOpacity style={styles.container(type)} onPress={onPress}>
@@ -28,9 +36,14 @@ const styles = StyleSheet.create({
       type === 'secondary'
         ? colors.button.secondary.background
         : colors.button.primary.background,
-    paddingVertical: 17,
-    borderRadius: 30,
+    paddingVertical: 10,
+    borderRadius: 10,
   }),
+  disableBg: {
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: colors.button.disable.background,
+  },
   text: (type) => ({
     fontSize: 18,
     fontWeight: '600',
@@ -41,4 +54,10 @@ const styles = StyleSheet.create({
         ? colors.button.secondary.text
         : colors.button.primary.text,
   }),
+  disableText: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: colors.button.disable.text,
+  },
 });
