@@ -19,6 +19,7 @@ const Register = ({navigation}) => {
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
+    // // getData async storage or localstorage
     // getData('user').then((res) => {
     //   console.log('data user: ', res);
     // });
@@ -40,7 +41,7 @@ const Register = ({navigation}) => {
 
         storeData('user', data);
         console.log('register success : ', success);
-        navigation.navigate('UploadPhoto');
+        navigation.navigate('UploadPhoto', data);
       })
       .catch((error) => {
         setLoading(false);

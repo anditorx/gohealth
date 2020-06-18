@@ -6,7 +6,9 @@ import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
 import ImagePicker from 'react-native-image-picker';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 
-const UploadPhoto = ({navigation}) => {
+const UploadPhoto = ({navigation, route}) => {
+  console.log('route : ', route);
+  const {fullName, profession, email} = route.params;
   const [hasPhoto, setHasPhoto] = useState(false);
   const [photo, setPhoto] = useState(ILNullPhoto);
   const getImageFromGallery = () => {
@@ -54,8 +56,8 @@ const UploadPhoto = ({navigation}) => {
             {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
             {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
           </TouchableOpacity>
-          <Text style={styles.txtName}>Lady Rose</Text>
-          <Text style={styles.txtProfesion}>Product Designer</Text>
+          <Text style={styles.txtName}>{fullName}</Text>
+          <Text style={styles.txtProfesion}>{profession}</Text>
         </View>
         <View>
           <Button
