@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, View, YellowBox} from 'react-native';
 // YellowBox.ignoreWarnings(['Remote debugger']);
 import {Button, Gap, Header, Input, Loading} from '../../components';
 import {Fire} from '../../config';
-import {colors, useForm} from '../../utils';
+import {colors, useForm, storeData, getData} from '../../utils';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const Register = ({navigation}) => {
@@ -19,6 +19,9 @@ const Register = ({navigation}) => {
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
+    // getData('user').then((res) => {
+    //   console.log('data user: ', res);
+    // });
 
     setLoading(true);
     Fire.auth()
@@ -34,10 +37,12 @@ const Register = ({navigation}) => {
         Fire.database()
           .ref('users/' + success.user.uid + '/')
           .set(data);
+
+        storeData('user', data);
         console.log('register success : ', success);
+        navigation.navigate('UploadPhoto');
       })
       .catch((error) => {
-        // Handle Errors here.
         setLoading(false);
         const errorMessage = error.message;
         console.log('error register: ', errorMessage);
@@ -46,12 +51,10 @@ const Register = ({navigation}) => {
           // description: 'This is our second message',
           type: 'default',
           position: 'bottom',
-          backgroundColor: colors.error, // background color
-          color: colors.white, // text color
+          backgroundColor: colors.error,
+          color: colors.white,
         });
       });
-
-    // navigation.navigate('UploadPhoto')
   };
 
   return (
