@@ -18,16 +18,17 @@ const Register = ({navigation}) => {
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
-    // setLoading(true);
+    setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
       .then((success) => {
-        // setLoading(false);
+        setLoading(false);
+        setForm('reset');
         console.log('register success : ', success);
       })
       .catch((error) => {
         // Handle Errors here.
-        // setLoading(false);
+        setLoading(false);
         const errorMessage = error.message;
         console.log('error register: ', errorMessage);
       });
