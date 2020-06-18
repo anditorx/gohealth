@@ -4,6 +4,7 @@ YellowBox.ignoreWarnings(['Remote debugger']);
 import {Button, Gap, Header, Input, Loading} from '../../components';
 import {Fire} from '../../config';
 import {colors, useForm} from '../../utils';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const Register = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -18,6 +19,7 @@ const Register = ({navigation}) => {
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
+
     setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
@@ -31,6 +33,14 @@ const Register = ({navigation}) => {
         setLoading(false);
         const errorMessage = error.message;
         console.log('error register: ', errorMessage);
+        showMessage({
+          message: errorMessage,
+          // description: 'This is our second message',
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error, // background color
+          color: colors.white, // text color
+        });
       });
 
     // navigation.navigate('UploadPhoto')
