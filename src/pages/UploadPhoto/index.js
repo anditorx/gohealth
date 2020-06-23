@@ -4,44 +4,59 @@ import {Button, Gap, Header, Input, Link} from '../../components';
 import {colors} from '../../utils/colors';
 import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
 import ImagePicker from 'react-native-image-picker';
+import {Fire} from '../../config';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UploadPhoto = ({navigation, route}) => {
   console.log('route : ', route);
-  const {fullName, profession, email} = route.params;
+  // const {fullName, profession, email, uid} = route.params;
   const [hasPhoto, setHasPhoto] = useState(false);
+  const [photoForDB, setPhotoForDB] = useState('');
   const [photo, setPhoto] = useState(ILNullPhoto);
+
   const getImageFromGallery = () => {
-    ImagePicker.showImagePicker((response) => {
-      console.log('Response = ', response);
+    ImagePicker.showImagePicker(
+      {quality: 0.3, maxWidth: 350, maxHeight: 350},
+      (response) => {
+        console.log('Response = ', response);
 
-      if (response.didCancel) {
-        console.log('You are cancelled image');
-        showMessage({
-          message: 'You are cancelled to upload image',
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.grey2,
-          color: colors.grey1,
-        });
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-        showMessage({
-          message: response.error,
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
-      } else {
-        const source = {uri: response.uri};
+        if (response.didCancel) {
+          console.log('You are cancelled image');
+          showMessage({
+            message: 'You are cancelled to upload image',
+            type: 'default',
+            position: 'bottom',
+            backgroundColor: colors.grey2,
+            color: colors.grey1,
+          });
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+          showMessage({
+            message: response.error,
+            type: 'default',
+            position: 'bottom',
+            backgroundColor: colors.error,
+            color: colors.white,
+          });
+        } else {
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+          const source = {uri: response.uri};
+          setPhotoForDB(`data: ${response.type};base64, ${response.data}`);
 
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        setPhoto(source);
-        setHasPhoto(true);
-      }
-    });
+          setPhoto(source);
+          setHasPhoto(true);
+        }
+      },
+    );
+  };
+
+  const uploadAndContinue = () => {
+    Fire.database()
+      .ref('users/' + uid + '/')
+      .update({photo: photoForDB});
+
+    navigation.replace('MainApp');
   };
 
   return (
@@ -56,14 +71,14 @@ const UploadPhoto = ({navigation, route}) => {
             {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
             {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
           </TouchableOpacity>
-          <Text style={styles.txtName}>{fullName}</Text>
-          <Text style={styles.txtProfesion}>{profession}</Text>
+          <Text style={styles.txtName}>nama</Text>
+          <Text style={styles.txtProfesion}>profesi</Text>
         </View>
         <View>
           <Button
             disable={!hasPhoto}
             title="Upload and Continue"
-            onPress={() => navigation.replace('MainApp')}
+            onPress={uploadAndContinue}
           />
           <Gap height={30} />
           <Link
