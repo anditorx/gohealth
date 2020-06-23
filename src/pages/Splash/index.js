@@ -7,9 +7,10 @@ import {Fire} from '../../config';
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
+      // session login
       Fire.auth().onAuthStateChanged((user) => {
         if (user) {
-          // user loged
+          // user still login
           console.log('user_login : ', user);
           navigation.replace('MainApp');
         } else {
