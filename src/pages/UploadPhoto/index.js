@@ -6,10 +6,11 @@ import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
 import ImagePicker from 'react-native-image-picker';
 import {Fire} from '../../config';
 import {showMessage, hideMessage} from 'react-native-flash-message';
+import {storeData} from '../../utils';
 
 const UploadPhoto = ({navigation, route}) => {
   console.log('route : ', route);
-  // const {fullName, profession, email, uid} = route.params;
+  const {fullName, profession, email, uid} = route.params;
   const [hasPhoto, setHasPhoto] = useState(false);
   const [photoForDB, setPhotoForDB] = useState('');
   const [photo, setPhoto] = useState(ILNullPhoto);
@@ -56,6 +57,11 @@ const UploadPhoto = ({navigation, route}) => {
       .ref('users/' + uid + '/')
       .update({photo: photoForDB});
 
+    const data = route.params;
+    data.photo = photoForDB;
+
+    storeData('user', data);
+
     navigation.replace('MainApp');
   };
 
@@ -71,8 +77,8 @@ const UploadPhoto = ({navigation, route}) => {
             {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
             {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
           </TouchableOpacity>
-          <Text style={styles.txtName}>nama</Text>
-          <Text style={styles.txtProfesion}>profesi</Text>
+          <Text style={styles.txtName}>{fullName}</Text>
+          <Text style={styles.txtProfesion}>{profession}</Text>
         </View>
         <View>
           <Button
