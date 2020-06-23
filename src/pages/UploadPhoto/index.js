@@ -42,6 +42,8 @@ const UploadPhoto = ({navigation, route}) => {
         } else {
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+          // setPhoto
           const source = {uri: response.uri};
           setPhotoForDB(`data: ${response.type};base64, ${response.data}`);
 
@@ -53,13 +55,14 @@ const UploadPhoto = ({navigation, route}) => {
   };
 
   const uploadAndContinue = () => {
+    // update photo in database firebase
     Fire.database()
       .ref('users/' + uid + '/')
       .update({photo: photoForDB});
 
+    // save to localstorage
     const data = route.params;
     data.photo = photoForDB;
-
     storeData('user', data);
 
     navigation.replace('MainApp');

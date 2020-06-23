@@ -7,22 +7,19 @@ import {colors, useForm, storeData, getData} from '../../utils';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const Register = ({navigation}) => {
+  // state form input
   const [form, setForm] = useForm({
     fullName: '',
     profession: '',
     email: '',
     password: '',
   });
-
+  // state loading
   const [loading, setLoading] = useState(false);
 
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
-    // // getData async storage or localstorage
-    // getData('user').then((res) => {
-    //   console.log('data user: ', res);
-    // });
 
     setLoading(true);
     Fire.auth()
@@ -36,10 +33,12 @@ const Register = ({navigation}) => {
           email: form.email,
           uid: success.user.uid,
         };
+        // set data to databse firebase
         Fire.database()
           .ref('users/' + success.user.uid + '/')
           .set(data);
 
+        // store data to localstorage
         storeData('user', data);
         console.log('register success : ', success);
         navigation.navigate('UploadPhoto', data);
