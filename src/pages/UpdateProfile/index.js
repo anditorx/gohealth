@@ -1,26 +1,131 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {Header, Profile, Gap, Input, Button} from '../../components';
-import {colors} from '../../utils/colors';
+import {getData, colors, storeData} from '../../utils';
+import {Fire} from '../../config';
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import ImagePicker from 'react-native-image-picker';
+import {ILNullPhoto} from '../../assets';
 
 const UpdateProfile = ({navigation}) => {
+  const [profile, setProfile] = useState({
+    fullName: '',
+    profession: '',
+    email: '',
+  });
+
+  const [password, setPassword] = useState('');
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const [photoForDB, setPhotoForDB] = useState('');
+
+  useEffect(() => {
+    getData('user').then((res) => {
+      const data = res;
+      setPhoto({uri: res.photo});
+      setProfile(data);
+    });
+  }, []);
+
+  const update = () => {
+    console.log(profile);
+    const data = profile;
+    // add data photo
+    data.photo = photoForDB;
+    // update data to db
+    Fire.database()
+      .ref(`users/${profile.uid}/`)
+      .update(data)
+      .then(() => {
+        console.log('success!');
+        storeData('user', data);
+        showMessage({
+          message: 'Success Update Profile',
+          description: 'Data has been updated',
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      })
+      .catch((err) => {
+        showMessage({
+          message: err.message,
+          // description: 'This is our second message',
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      });
+  };
+
+  const changeText = (key, value) => {
+    setProfile({
+      ...profile,
+      [key]: value,
+    });
+  };
+
+  const getImage = () => {
+    ImagePicker.showImagePicker(
+      {quality: 0.3, maxWidth: 350, maxHeight: 350},
+      (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('You are cancelled image');
+          showMessage({
+            message: 'You are cancelled to upload image',
+            type: 'default',
+            position: 'bottom',
+            backgroundColor: colors.grey2,
+            color: colors.grey1,
+          });
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+          showMessage({
+            message: response.error,
+            type: 'default',
+            position: 'bottom',
+            backgroundColor: colors.error,
+            color: colors.white,
+          });
+        } else {
+          // setPhoto
+          const source = {uri: response.uri};
+          setPhotoForDB(`data: ${response.type};base64, ${response.data}`);
+
+          setPhoto(source);
+        }
+      },
+    );
+  };
+
   return (
     <View style={styles.page}>
       <Header title="Edit Profile" onPress={() => navigation.goBack()} />
       <Gap height={10} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Profile isRemove />
+          <Profile isRemove photo={photo} onPress={getImage} />
           <Gap height={30} />
-          <Input label="Full Name" />
+          <Input
+            label="Full Name"
+            value={profile.fullName}
+            onChangeText={(value) => changeText('fullName', value)}
+          />
           <Gap height={20} />
-          <Input label="Pekerjaan" />
+          <Input
+            label="Pekerjaan"
+            value={profile.profession}
+            onChangeText={(value) => changeText('profession', value)}
+          />
           <Gap height={20} />
-          <Input label="Email" />
+          <Input label="Email" value={profile.email} disable />
           <Gap height={20} />
-          <Input label="Password" />
+          <Input label="Password" value={profile.password} />
           <Gap height={40} />
-          <Button title="Save Profile" />
+          <Button title="Save Profile" onPress={update} />
           <Gap height={50} />
         </View>
       </ScrollView>
