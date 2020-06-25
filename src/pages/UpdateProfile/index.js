@@ -28,22 +28,69 @@ const UpdateProfile = ({navigation}) => {
 
   const update = () => {
     console.log(profile);
-    const data = profile;
+
+    // cek password
+    console.log('new password : ', password);
+    if (password.length > 0) {
+      if (password.length < 6) {
+        showMessage({
+          message: 'Password kurang dari 6 karakter.',
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      } else {
+        // update password
+        updatePassword();
+        updateProfilData();
+        navigation.replace('MainApp');
+      }
+    } else {
+      // update profile data to db
+      updateProfilData();
+      navigation.replace('MainApp');
+    }
+  };
+
+  const updatePassword = () => {
+    Fire.auth().onAuthStateChanged((user) => {
+      // cek ada usernya atau tidak
+      if (user) {
+        // update password
+        user
+          .updatePassword(password)
+          // jika gagal
+          .catch((err) => {
+            showMessage({
+              message: err.message,
+              type: 'default',
+              position: 'bottom',
+              backgroundColor: colors.error,
+              color: colors.white,
+            });
+          });
+      }
+    });
+  };
+
+  const updateProfilData = () => {
     // add data photo
+    const data = profile;
     data.photo = photoForDB;
-    // update data to db
+
     Fire.database()
       .ref(`users/${profile.uid}/`)
       .update(data)
       .then(() => {
-        console.log('success!');
+        console.log('success! - data localstorage: ', data);
         storeData('user', data);
         showMessage({
           message: 'Success Update Profile',
           description: 'Data has been updated',
           type: 'default',
           position: 'bottom',
-          backgroundColor: colors.error,
+          backgroundColor: colors.primary,
           color: colors.white,
         });
       })
@@ -107,7 +154,11 @@ const UpdateProfile = ({navigation}) => {
       <Gap height={10} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Profile isRemove photo={photo} onPress={getImage} />
+          <Profile
+            isRemove
+            photo={photo.uri === '' ? ILNullPhoto : photo}
+            onPress={getImage}
+          />
           <Gap height={30} />
           <Input
             label="Full Name"
@@ -123,7 +174,12 @@ const UpdateProfile = ({navigation}) => {
           <Gap height={20} />
           <Input label="Email" value={profile.email} disable />
           <Gap height={20} />
-          <Input label="Password" value={profile.password} />
+          <Input
+            label="Password"
+            secureTextEntry
+            value={profile.password}
+            onChangeText={(value) => setPassword(value)}
+          />
           <Gap height={40} />
           <Button title="Save Profile" onPress={update} />
           <Gap height={50} />
