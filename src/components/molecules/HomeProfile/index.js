@@ -17,17 +17,17 @@ const HomeProfile = ({onPress}) => {
       console.log('data user: ', res);
       const data = res;
       data.photo = {uri: res.photo};
-      setProfile(data);
+      setProfile(res);
     });
   }, []);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      {profile.photo.uri === '' ? (
+      {/* {profile.photo.uri === '' ? (
         <Image source={ILNullPhoto} style={styles.avatar} />
-      ) : (
-        <Image source={profile.photo} style={styles.avatar} />
-      )}
+      ) : ( */}
+      <Image source={profile.photo} style={styles.avatar} />
+      {/* )} */}
 
       <View>
         <Text style={styles.name}>{profile.fullName}</Text>

@@ -4,6 +4,8 @@ import {Header, Profile, List, Gap} from '../../components';
 import {colors} from '../../utils/colors';
 import {getData} from '../../utils';
 import {ILNullPhoto} from '../../assets';
+import {Fire} from '../../config';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UserProfile = ({navigation}) => {
   // state profile
@@ -20,6 +22,24 @@ const UserProfile = ({navigation}) => {
       setProfile(data);
     });
   }, []);
+
+  const signout = () => {
+    Fire.auth()
+      .signOut()
+      .then((res) => {
+        console.log('sukses sign out');
+        navigation.replace('GetStarted');
+      })
+      .catch((err) => {
+        showMessage({
+          message: err.message,
+          type: 'default',
+          position: 'bottom',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      });
+  };
 
   return (
     <View style={styles.page}>
@@ -59,6 +79,13 @@ const UserProfile = ({navigation}) => {
           desc="Read our guidelines"
           type="next"
           icon="help-center"
+        />
+        <List
+          name="Log out"
+          desc="Last update Yesterday"
+          type="next"
+          icon="help-center"
+          onPress={signout}
         />
         <Gap height={50} />
       </ScrollView>
