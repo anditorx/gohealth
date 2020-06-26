@@ -18,14 +18,26 @@ import {Fire} from '../../config';
 
 const Doctor = ({navigation}) => {
   const [news, setNews] = useState([]);
+  const [categoryDoctor, setCategoryDoctor] = useState([]);
   useEffect(() => {
     Fire.database()
       .ref('news/')
       .once('value')
       .then((res) => {
-        console.log('data: ', res.val());
         if (res.val()) {
           setNews(res.val());
+        }
+      })
+      .catch((err) => {
+        showMessageError(err.message);
+      });
+    Fire.database()
+      .ref('category_doctor/')
+      .once('value')
+      .then((res) => {
+        console.log('data doctor category: ', res.val());
+        if (res.val()) {
+          setCategoryDoctor(res.val());
         }
       })
       .catch((err) => {
@@ -48,8 +60,7 @@ const Doctor = ({navigation}) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.category}>
                 <Gap height={16} />
-                {JSONCategoryDoctor.data.map((item) => {
-                  // console.log('item', item);
+                {categoryDoctor.map((item) => {
                   return (
                     <DoctorCategory
                       key={item.id}
