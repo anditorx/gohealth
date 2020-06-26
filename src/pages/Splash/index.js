@@ -11,7 +11,6 @@ const Splash = ({navigation}) => {
       Fire.auth().onAuthStateChanged((user) => {
         if (user) {
           // user still login
-          console.log('user_login : ', user);
           navigation.replace('MainApp');
         } else {
           // user logout

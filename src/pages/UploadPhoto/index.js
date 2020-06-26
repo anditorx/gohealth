@@ -63,6 +63,7 @@ const UploadPhoto = ({navigation, route}) => {
     // save to localstorage
     const data = route.params;
     data.photo = photoForDB;
+    // save data to localstorage
     storeData('user', data);
 
     navigation.replace('MainApp');

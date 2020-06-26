@@ -50,7 +50,7 @@ const UserProfile = ({navigation}) => {
           <Profile
             name={profile.fullName}
             desc={profile.profession}
-            photo={profile.photo.uri === '' ? ILNullPhoto : profile.photo}
+            photo={profile.photo}
           />
         )}
 

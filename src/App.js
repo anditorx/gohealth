@@ -9,14 +9,14 @@ import store from './redux/store';
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <>
       <NavigationContainer>
         <SafeAreaView style={styles.safeAreaView}>
           <Router />
         </SafeAreaView>
       </NavigationContainer>
       <FlashMessage position="top" />
-    </Provider>
+    </>
   );
 };
 

@@ -41,7 +41,7 @@ const UpdateProfile = ({navigation}) => {
           color: colors.white,
         });
       } else {
-        // update password
+        // update password and update profile data to db
         updatePassword();
         updateProfilData();
         navigation.replace('MainApp');
@@ -83,7 +83,7 @@ const UpdateProfile = ({navigation}) => {
       .ref(`users/${profile.uid}/`)
       .update(data)
       .then(() => {
-        console.log('success! - data localstorage: ', data);
+        console.log('success! - save to localstorage: ', data);
         storeData('user', data);
         showMessage({
           message: 'Success Update Profile',
@@ -154,11 +154,7 @@ const UpdateProfile = ({navigation}) => {
       <Gap height={10} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Profile
-            isRemove
-            photo={photo.uri === '' ? ILNullPhoto : photo}
-            onPress={getImage}
-          />
+          <Profile isRemove photo={photo} onPress={getImage} />
           <Gap height={30} />
           <Input
             label="Full Name"

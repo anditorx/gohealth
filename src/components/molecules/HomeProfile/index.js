@@ -14,7 +14,7 @@ const HomeProfile = ({onPress}) => {
   // getData async storage or localstorage
   useEffect(() => {
     getData('user').then((res) => {
-      console.log('data user: ', res);
+      console.log('component HomeProfile | getData user: ', res);
       const data = res;
       data.photo = {uri: res.photo};
       setProfile(res);

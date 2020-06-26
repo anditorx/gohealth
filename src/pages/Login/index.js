@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
         console.log('success : ', res);
         showMessage({
           message: 'Login Success',
-          description: "Just wait a minute. We will try get you're data.",
+          description: "Just wait a minute. We will try to get you're data.",
           type: 'default',
           position: 'bottom',
           backgroundColor: colors.primary,
