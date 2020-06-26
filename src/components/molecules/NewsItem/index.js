@@ -2,9 +2,9 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../../utils/colors';
 
-const NewsItem = ({title, date, image, body}) => {
+const NewsItem = ({id, title, date, image, body}) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={id}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.date}>{date}</Text>
