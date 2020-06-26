@@ -6,9 +6,9 @@ import {Fire} from '../../config';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      // session login
-      Fire.auth().onAuthStateChanged((user) => {
+    // session login
+    const unsubscribe = Fire.auth().onAuthStateChanged((user) => {
+      setTimeout(() => {
         if (user) {
           // user still login
           navigation.replace('MainApp');
@@ -16,8 +16,9 @@ const Splash = ({navigation}) => {
           // user logout
           navigation.replace('GetStarted');
         }
-      });
-    }, 3000);
+      }, 3000);
+    });
+    return () => unsubscribe();
   }, [navigation]);
 
   return (
