@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {
   HomeProfile,
@@ -7,19 +7,30 @@ import {
   NewsItem,
   Gap,
 } from '../../components';
-import {colors, getData} from '../../utils';
+import {colors, getData, showMessageError} from '../../utils';
 import {
   JSONCategoryDoctor,
   DumDokter1,
   DumDokter2,
   DumDokter3,
 } from '../../assets';
+import {Fire} from '../../config';
 
 const Doctor = ({navigation}) => {
+  const [news, setNews] = useState([]);
   useEffect(() => {
-    getData('user').then((res) => {
-      console.log('doctor page | getData user', res);
-    });
+    Fire.database()
+      .ref('news/')
+      .once('value')
+      .then((res) => {
+        console.log('data: ', res.val());
+        if (res.val()) {
+          setNews(res.val());
+        }
+      })
+      .catch((err) => {
+        showMessageError(err.message);
+      });
   }, []);
 
   return (
@@ -71,9 +82,16 @@ const Doctor = ({navigation}) => {
             onPress={() => navigation.navigate('DoctorProfile')}
           />
           <Text style={styles.selectionLabel}>Good News</Text>
-          <NewsItem />
-          <NewsItem />
-          <NewsItem />
+          {news.map((item) => {
+            return (
+              <NewsItem
+                key={item.id}
+                title={item.title}
+                date={item.date}
+                image={item.image}
+              />
+            );
+          })}
           <Gap height={30} />
         </ScrollView>
       </View>
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginTop: 30,
-    marginBottom: 10,
+    marginBottom: 5,
     paddingHorizontal: 17,
   },
 });
