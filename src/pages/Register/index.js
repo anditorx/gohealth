@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, View, YellowBox} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 // YellowBox.ignoreWarnings(['Remote debugger']);
-import {Button, Gap, Header, Input, Loading} from '../../components';
+import {Button, Gap, Header, Input} from '../../components';
 import {Fire} from '../../config';
-import {colors, useForm, storeData, getData} from '../../utils';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {colors, showMessageError, storeData, useForm} from '../../utils';
 
 const Register = ({navigation}) => {
   // state form input
@@ -14,18 +14,17 @@ const Register = ({navigation}) => {
     email: '',
     password: '',
   });
-  // state loading
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const onContinue = () => {
     console.log('#btn continue');
     console.log('form : ', form);
 
-    setLoading(true);
+    dispatch({type: 'SET_LOADING', value: true});
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
       .then((success) => {
-        setLoading(false);
+        dispatch({type: 'SET_LOADING', value: false});
         setForm('reset');
         const data = {
           fullName: form.fullName,
@@ -44,17 +43,10 @@ const Register = ({navigation}) => {
         navigation.navigate('UploadPhoto', data);
       })
       .catch((error) => {
-        setLoading(false);
+        dispatch({type: 'SET_LOADING', value: false});
         const errorMessage = error.message;
         console.log('error register: ', errorMessage);
-        showMessage({
-          message: errorMessage,
-          // description: 'This is our second message',
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showMessageError(errorMessage);
       });
   };
 
@@ -95,7 +87,6 @@ const Register = ({navigation}) => {
           </ScrollView>
         </View>
       </View>
-      {loading && <Loading />}
     </>
   );
 };

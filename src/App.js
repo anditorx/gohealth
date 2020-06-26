@@ -2,12 +2,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import Router from './router';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 
 import FlashMessage from 'react-native-flash-message';
 import store from './redux/store';
+import {Loading} from './components';
 
-const App = () => {
+const MainApp = () => {
+  const stateGlobal = useSelector((state) => state);
   return (
     <>
       <NavigationContainer>
@@ -15,11 +17,19 @@ const App = () => {
           <Router />
         </SafeAreaView>
       </NavigationContainer>
-      <FlashMessage position="top" />
+      <FlashMessage position="bottom" />
+      {stateGlobal.loading && <Loading />}
     </>
   );
 };
 
+const App = () => {
+  return (
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
+  );
+};
 export default App;
 
 const styles = StyleSheet.create({

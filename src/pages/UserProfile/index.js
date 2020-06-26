@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {Header, Profile, List, Gap} from '../../components';
-import {colors} from '../../utils/colors';
-import {getData} from '../../utils';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {ILNullPhoto} from '../../assets';
+import {Gap, Header, List, Profile} from '../../components';
 import {Fire} from '../../config';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {getData, showMessageError} from '../../utils';
+import {colors} from '../../utils/colors';
 
 const UserProfile = ({navigation}) => {
   // state profile
@@ -27,17 +26,10 @@ const UserProfile = ({navigation}) => {
     Fire.auth()
       .signOut()
       .then((res) => {
-        console.log('sukses sign out');
         navigation.replace('GetStarted');
       })
       .catch((err) => {
-        showMessage({
-          message: err.message,
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showMessageError(err.message);
       });
   };
 

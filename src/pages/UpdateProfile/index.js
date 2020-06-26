@@ -1,11 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {Header, Profile, Gap, Input, Button} from '../../components';
-import {getData, colors, storeData} from '../../utils';
-import {Fire} from '../../config';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {ILNullPhoto} from '../../assets';
+import {Button, Gap, Header, Input, Profile} from '../../components';
+import {Fire} from '../../config';
+import {
+  colors,
+  getData,
+  showMessageError,
+  showMessageSuccess,
+  storeData,
+} from '../../utils';
 
 const UpdateProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
@@ -33,13 +38,7 @@ const UpdateProfile = ({navigation}) => {
     console.log('new password : ', password);
     if (password.length > 0) {
       if (password.length < 6) {
-        showMessage({
-          message: 'Password kurang dari 6 karakter.',
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showMessageError('Gunakan password minimal 6 karakter.');
       } else {
         // update password and update profile data to db
         updatePassword();
@@ -62,13 +61,7 @@ const UpdateProfile = ({navigation}) => {
           .updatePassword(password)
           // jika gagal
           .catch((err) => {
-            showMessage({
-              message: err.message,
-              type: 'default',
-              position: 'bottom',
-              backgroundColor: colors.error,
-              color: colors.white,
-            });
+            showMessageError(err.message);
           });
       }
     });
@@ -85,24 +78,10 @@ const UpdateProfile = ({navigation}) => {
       .then(() => {
         console.log('success! - save to localstorage: ', data);
         storeData('user', data);
-        showMessage({
-          message: 'Success Update Profile',
-          description: 'Data has been updated',
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.primary,
-          color: colors.white,
-        });
+        showMessageSuccess('Success Update Profile');
       })
       .catch((err) => {
-        showMessage({
-          message: err.message,
-          // description: 'This is our second message',
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showMessageError(err.message);
       });
   };
 
@@ -120,23 +99,9 @@ const UpdateProfile = ({navigation}) => {
         console.log('Response = ', response);
 
         if (response.didCancel) {
-          console.log('You are cancelled image');
-          showMessage({
-            message: 'You are cancelled to upload image',
-            type: 'default',
-            position: 'bottom',
-            backgroundColor: colors.grey2,
-            color: colors.grey1,
-          });
+          showMessageError('You are cancelled image');
         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-          showMessage({
-            message: response.error,
-            type: 'default',
-            position: 'bottom',
-            backgroundColor: colors.error,
-            color: colors.white,
-          });
+          showMessageError(response.error);
         } else {
           // setPhoto
           const source = {uri: response.uri};

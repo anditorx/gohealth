@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import {ILLogo, ILGetStarted} from '../../assets';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+
+import {ILGetStarted, ILLogo} from '../../assets';
 import {Button, Gap} from '../../components';
 import {colors} from '../../utils/colors';
 

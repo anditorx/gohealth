@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import {Button, Gap, Header, Input, Link} from '../../components';
-import {colors} from '../../utils/colors';
-import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
+import {Button, Gap, Header, Link} from '../../components';
 import {Fire} from '../../config';
-import {showMessage, hideMessage} from 'react-native-flash-message';
-import {storeData} from '../../utils';
+import {showMessageError, storeData} from '../../utils';
+import {colors} from '../../utils/colors';
 
 const UploadPhoto = ({navigation, route}) => {
   console.log('route : ', route);
@@ -22,23 +21,9 @@ const UploadPhoto = ({navigation, route}) => {
         console.log('Response = ', response);
 
         if (response.didCancel) {
-          console.log('You are cancelled image');
-          showMessage({
-            message: 'You are cancelled to upload image',
-            type: 'default',
-            position: 'bottom',
-            backgroundColor: colors.grey2,
-            color: colors.grey1,
-          });
+          showMessageError('You are cancelled to upload image');
         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-          showMessage({
-            message: response.error,
-            type: 'default',
-            position: 'bottom',
-            backgroundColor: colors.error,
-            color: colors.white,
-          });
+          showMessageError(response.error);
         } else {
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };

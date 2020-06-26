@@ -1,33 +1,33 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {ILLogo} from '../../assets';
-import {Input, Link, Button, Gap, Loading} from '../../components';
-import {colors, useForm, storeData} from '../../utils';
+import {Button, Gap, Input, Link} from '../../components';
 import {Fire} from '../../config';
-import {showMessage} from 'react-native-flash-message';
+import {
+  colors,
+  showMessageError,
+  showMessageSuccess,
+  storeData,
+  useForm,
+} from '../../utils';
 
 const Login = ({navigation}) => {
   // state form input
   const [form, setForm] = useForm({email: '', password: ''});
-  // state loading
-  const [loading, setLoading] = useState(false);
+
+  // dispatch for change stateGlobal in reducer
+  const dispatch = useDispatch();
 
   const login = () => {
-    console.log('form', form);
-    setLoading(true);
+    // change loading in reducer with type and value
+    dispatch({type: 'SET_LOADING', value: true});
+    // authentication
     Fire.auth()
       .signInWithEmailAndPassword(form.email, form.password)
       .then((res) => {
-        setLoading(false);
-        console.log('success : ', res);
-        showMessage({
-          message: 'Login Success',
-          description: "Just wait a minute. We will try to get you're data.",
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.primary,
-          color: colors.white,
-        });
+        dispatch({type: 'SET_LOADING', value: false});
+        showMessageSuccess('Login Success');
         // get data from db firebase
         Fire.database()
           .ref(`users/${res.user.uid}/`)
@@ -41,15 +41,8 @@ const Login = ({navigation}) => {
           });
       })
       .catch((err) => {
-        setLoading(false);
-        console.log('error : ', err);
-        showMessage({
-          message: err.message,
-          type: 'default',
-          position: 'bottom',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        dispatch({type: 'SET_LOADING', value: false});
+        showMessageError(err.message);
       });
   };
 
@@ -86,7 +79,6 @@ const Login = ({navigation}) => {
           <Gap height={30} />
         </ScrollView>
       </View>
-      {loading && <Loading />}
     </>
   );
 };
