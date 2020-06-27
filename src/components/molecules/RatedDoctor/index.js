@@ -45,11 +45,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     color: colors.text.primary,
+    textTransform: 'capitalize',
   },
   category: {
     fontSize: 12,
     color: colors.text.primary,
     marginTop: 2,
+    textTransform: 'capitalize',
   },
   profile: {
     flex: 1,

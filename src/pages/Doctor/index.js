@@ -1,25 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {DumDokter1, DumDokter2, DumDokter3} from '../../assets';
 import {
-  HomeProfile,
   DoctorCategory,
-  RatedDoctor,
-  NewsItem,
   Gap,
+  HomeProfile,
+  NewsItem,
+  RatedDoctor,
 } from '../../components';
-import {colors, getData, showMessageError} from '../../utils';
-import {
-  JSONCategoryDoctor,
-  DumDokter1,
-  DumDokter2,
-  DumDokter3,
-} from '../../assets';
 import {Fire} from '../../config';
+import {colors, showMessageError} from '../../utils';
 
 const Doctor = ({navigation}) => {
   const [news, setNews] = useState([]);
   const [categoryDoctor, setCategoryDoctor] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   useEffect(() => {
+    getNews();
+    getCategoryDoctor();
+    getTopRatedDoctor();
+  }, []);
+
+  const getNews = () => {
     Fire.database()
       .ref('news/')
       .once('value')
@@ -31,11 +33,13 @@ const Doctor = ({navigation}) => {
       .catch((err) => {
         showMessageError(err.message);
       });
+  };
+
+  const getCategoryDoctor = () => {
     Fire.database()
       .ref('category_doctor/')
       .once('value')
       .then((res) => {
-        console.log('data doctor category: ', res.val());
         if (res.val()) {
           setCategoryDoctor(res.val());
         }
@@ -43,7 +47,32 @@ const Doctor = ({navigation}) => {
       .catch((err) => {
         showMessageError(err.message);
       });
-  }, []);
+  };
+
+  const getTopRatedDoctor = () => {
+    Fire.database()
+      .ref('doctors/')
+      .orderByChild('rate')
+      .limitToLast(3)
+      .once('value')
+      .then((res) => {
+        if (res.val()) {
+          const oldData = res.val();
+          const data = [];
+          // maksud Object.keys(listObj) = listObj nya kita jadikan array
+          Object.keys(oldData).map((key) => {
+            data.push({
+              id: key,
+              data: oldData[key],
+            });
+          });
+          setDoctors(data);
+        }
+      })
+      .catch((err) => {
+        showMessageError(err.message);
+      });
+  };
 
   return (
     <View style={styles.page}>
@@ -74,24 +103,17 @@ const Doctor = ({navigation}) => {
             </ScrollView>
           </View>
           <Text style={styles.selectionLabel}>Top Rated Doctors</Text>
-          <RatedDoctor
-            name={'Dr. Jehan Rasyid'}
-            desc={'Dokter Anak'}
-            avatar={DumDokter1}
-            onPress={() => navigation.navigate('DoctorProfile')}
-          />
-          <RatedDoctor
-            name={'Dr. Rini Makie'}
-            desc={'Pedistrian'}
-            avatar={DumDokter2}
-            onPress={() => navigation.navigate('DoctorProfile')}
-          />
-          <RatedDoctor
-            name={'Dr. Donita Nasir'}
-            desc={'Pedistrian'}
-            avatar={DumDokter3}
-            onPress={() => navigation.navigate('DoctorProfile')}
-          />
+          {doctors.map((doctorList) => {
+            return (
+              <RatedDoctor
+                key={doctorList.id}
+                name={doctorList.data.fullName}
+                desc={doctorList.data.profession}
+                avatar={{uri: doctorList.data.photo}}
+                onPress={() => navigation.navigate('DoctorProfile')}
+              />
+            );
+          })}
           <Text style={styles.selectionLabel}>Good News</Text>
           {news.map((item) => {
             return (
