@@ -54,11 +54,13 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     marginTop: 16,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   profession: {
     fontSize: 14,
     color: colors.text.secondary,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   remove: {
     position: 'absolute',
