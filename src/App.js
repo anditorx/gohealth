@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, YellowBox} from 'react-native';
 import Router from './router';
 import {Provider, useSelector} from 'react-redux';
 
@@ -10,6 +10,7 @@ import {Loading} from './components';
 
 const MainApp = () => {
   const stateGlobal = useSelector((state) => state);
+  YellowBox.ignoreWarnings(['Setting a timer']);
   return (
     <>
       <NavigationContainer>

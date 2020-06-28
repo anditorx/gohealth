@@ -4,15 +4,15 @@ import {colors} from '../../../utils/colors';
 import {Button} from '../../atoms';
 import {DumDokter1} from '../../../assets';
 
-const DarkProfile = ({onPress}) => {
+const DarkProfile = ({onPress, title, desc, photo}) => {
   return (
     <View style={styles.container}>
-      <Button type="icon-only" icon="back-light" onPress={onPress}/>
+      <Button type="icon-only" icon="back-light" onPress={onPress} />
       <View style={styles.content}>
-        <Text style={styles.name}>Dr. Alexander Guerero</Text>
-        <Text style={styles.specialist}>Dokter Anak</Text>
+        <Text style={styles.name}>{title}</Text>
+        <Text style={styles.specialist}>{desc}</Text>
       </View>
-      <Image source={DumDokter1} style={styles.imgDoctor} />
+      <Image source={photo} style={styles.imgDoctor} />
     </View>
   );
 };
@@ -38,11 +38,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   specialist: {
     color: colors.text.subTitle,
     fontSize: 14,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   imgDoctor: {
     width: 46,
