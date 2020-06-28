@@ -51,7 +51,7 @@ const ChooseDoctor = ({navigation, route}) => {
             picture={{uri: doctor.data.photo}}
             name={doctor.data.fullName}
             desc={doctor.data.gender}
-            onPress={() => navigation.navigate('Chat')}
+            onPress={() => navigation.navigate('DoctorProfile', doctor)}
           />
         );
       })}

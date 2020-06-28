@@ -27,12 +27,13 @@ export default Header;
 const styles = StyleSheet.create({
   container: (type) => ({
     paddingHorizontal: 16,
-    paddingVertical: 30,
+    paddingVertical: 16,
     backgroundColor: type === 'dark' ? colors.secondary : colors.white,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomLeftRadius: type === 'dark' ? 20 : 0,
     borderBottomRightRadius: type === 'dark' ? 20 : 0,
+    elevation: 3,
   }),
   title: (type) => ({
     flex: 1,
