@@ -59,10 +59,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     color: colors.text.primary,
+    textTransform: 'capitalize',
   },
   desc: {
     fontSize: 12,
     fontWeight: '300',
     color: colors.text.secondary,
+    textTransform: 'capitalize',
   },
 });
