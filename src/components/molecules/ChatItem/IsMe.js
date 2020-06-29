@@ -2,19 +2,13 @@ import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {colors} from '../../../utils/colors';
 import {DumDokter1} from '../../../assets';
-
-const IsMe = () => {
+const IsMe = ({text, date}) => {
   return (
     <View style={styles.container}>
-      <Image source={DumDokter1} style={styles.imgDoctorChat} />
-      <View>
-        <View style={styles.chatContent}>
-          <Text style={styles.text}>
-            Jeruk bagus, untuk meningkatkan vitamin c pada tubuh
-          </Text>
-        </View>
-        <Text style={styles.date}>04.20 AM</Text>
+      <View style={styles.chatContent}>
+        <Text style={styles.text}>{text}</Text>
       </View>
+      <Text style={styles.date}>{date}</Text>
     </View>
   );
 };
@@ -23,18 +17,17 @@ export default IsMe;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 10,
     alignItems: 'flex-end',
-    paddingLeft: 16,
-    flexDirection: 'row',
+    paddingRight: 16,
   },
   chatContent: {
     padding: 12,
     paddingRight: 18,
-    backgroundColor: colors.cardLight,
-    maxWidth: '85%',
+    backgroundColor: colors.disable,
+    maxWidth: '90%',
     borderRadius: 10,
-    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   text: {
     fontSize: 14,

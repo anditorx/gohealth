@@ -1,16 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {colors} from '../../../utils/colors';
+import {DumDokter1} from '../../../assets';
 
-const Other = () => {
+const Other = ({text, date, photo}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.chatContent}>
-        <Text style={styles.text}>
-          Ibu Dr, apakah memakan jeruk tiap hari itu buruk?
-        </Text>
+      {/* <Image source={{photo}} style={styles.imgDoctorChat} /> */}
+      <View>
+        <View style={styles.chatContent}>
+          <Text style={styles.text}>{text}</Text>
+        </View>
+        <Text style={styles.date}>{date}</Text>
       </View>
-      <Text style={styles.date}>04.20 AM</Text>
     </View>
   );
 };
@@ -21,15 +23,17 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
     alignItems: 'flex-end',
+    paddingLeft: 16,
     paddingRight: 16,
+    flexDirection: 'row',
   },
   chatContent: {
-    padding: 12,
-    paddingRight: 18,
-    backgroundColor: colors.disable,
-    maxWidth: '85%',
+    padding: 10,
+    // paddingRight: 18,
+    backgroundColor: colors.cardLight,
+    // maxWidth: '95%',
     borderRadius: 10,
-    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   text: {
     fontSize: 14,
@@ -39,5 +43,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.text.secondary,
     marginTop: 3,
+  },
+  imgDoctorChat: {
+    height: 30,
+    width: 30,
+    borderRadius: 30 / 2,
+    marginRight: 12,
   },
 });
