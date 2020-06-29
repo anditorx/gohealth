@@ -102,7 +102,7 @@ const Chat = ({navigation, route}) => {
                       key={itemChat.id}
                       text={itemChat.data.chatContent}
                       date={itemChat.data.chatTime}
-                      photo={!isMe ? null : {uri: dataDoctor.data.photo}}
+                      photo={isMe ? null : {uri: dataDoctor.data.photo}}
                     />
                   );
                 })}
